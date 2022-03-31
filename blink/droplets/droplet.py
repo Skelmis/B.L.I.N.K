@@ -14,7 +14,7 @@ class DropletFrame(wx.Frame):
     def __init__(self, start_time: datetime.datetime, parent=None, title=""):
         super().__init__(parent, title=title, size=DEFAULT_SIZE)
 
-        self.menu_bar: MenuBar = MenuBar(self, start_time)
+        self.menu_bar: MenuBar = MenuBar(self, start_time, parent)
         self._home_page: "HomeFrame" = parent
         self._start_time: datetime.datetime = start_time
 

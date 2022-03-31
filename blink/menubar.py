@@ -1,32 +1,40 @@
 import asyncio
 import datetime
 import time
+from typing import TYPE_CHECKING
 
 import humanize
 import wx
 from wxasync import StartCoroutine
 
+if TYPE_CHECKING:
+    from blink import HomeFrame
+
 
 class MenuBar(wx.MenuBar):
-    def __init__(self, bind_frame: wx.Frame, start_time: datetime.datetime):
+    def __init__(
+        self,
+        bind_frame: wx.Frame,
+        start_time: datetime.datetime,
+        home_page: "HomeFrame",
+    ):
         super().__init__()
+        self._home_frame: "HomeFrame" = home_page
         self._start_time: datetime.datetime = start_time
 
-        self.file_menu: wx.Menu = wx.Menu()
-        self.file_menu_exit: wx.MenuItem = self.file_menu.Append(
+        self.navigate_menu: wx.Menu = wx.Menu()
+        self.open_home_menu: wx.MenuItem = self.navigate_menu.Append(
             wx.ID_ANY,
-            "Show somethin",
-            "Show somethin",
-            kind=wx.ITEM_CHECK,
+            "Home",
+            "open_home",
         )
-        self.file_menu.Check(self.file_menu_exit.GetId(), True)
 
         # Add the menubar item to the frame itself
-        self.Append(self.file_menu, "&File")
+        self.Append(self.navigate_menu, "Navigate")
         bind_frame.SetMenuBar(self)
 
         # Bind buttons to toggles
-        bind_frame.Bind(wx.EVT_MENU, self.toggle_somethin, self.file_menu_exit)
+        bind_frame.Bind(wx.EVT_MENU, self.open_home, self.open_home_menu)
 
         # Adds a bar at the bottom of the screen
         self.status_bar: wx.StatusBar = bind_frame.CreateStatusBar(2)
@@ -37,11 +45,10 @@ class MenuBar(wx.MenuBar):
         self._bind_frame: wx.Frame = bind_frame
         self.resize_status_bar()
 
-    def toggle_somethin(self, e):
-        if self.file_menu_exit.IsChecked():
-            self.status_bar.Show()
-        else:
-            self.status_bar.Hide()
+    def open_home(self, event: wx.Event):
+        if self._home_frame != self._bind_frame:
+            self._bind_frame.Destroy()
+            self._home_frame.Show()
 
     def resize_status_bar(self):
         time_size = wx.Window.GetTextExtent(self._bind_frame, self.time_now)

@@ -13,7 +13,7 @@ class HomeFrame(wx.Frame):
     def __init__(self, start_time: datetime.datetime, parent=None):
         super().__init__(parent, title="B.L.I.N.K", size=DEFAULT_SIZE)
 
-        self.menu_bar: MenuBar = MenuBar(self, start_time)
+        self.menu_bar: MenuBar = MenuBar(self, start_time, self)
         self._start_time: datetime.datetime = start_time
         """
         wx.Font(pointSize, family, style, weight, underline=False, faceName="", encoding=wx.FONTENCODING_DEFAULT)
