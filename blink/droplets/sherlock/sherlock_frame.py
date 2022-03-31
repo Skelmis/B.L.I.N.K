@@ -60,16 +60,25 @@ class SherlockFrame(DropletFrame):
         """Runs the sherlock search"""
         if self.is_searching:
             # Can't do concurrent searches
+            self.output_text.SetLabel("Cannot do concurrent searches.")
+            await asyncio.sleep(2)
+            if self.is_searching:
+                # Don't override results
+                self.output_text.SetLabel("")
             return
 
+        # Clear old output
         self.output_text.SetLabel("")
-
-        # Clear old list
 
         # Run search
         self._is_currently_searching = True
         StartCoroutine(self.status_process, self)
         username: str = self.input_item.GetValue()
+        if not username:
+            self.output_text.SetLabel("Username cannot be nothing.")
+            self._is_currently_searching = False
+            return
+
         results: List[str] = await self._sherlock.request(username)
 
         # Display results
