@@ -1,12 +1,11 @@
 import asyncio
-import time
 
 import wx
-from wxasync import AsyncBind, StartCoroutine
+from wxasync import AsyncBind
 
 from blink import MenuBar
 
-DEFAULT_SIZE = (400, 250)
+DEFAULT_SIZE = (600, 450)
 
 
 class HomeFrame(wx.Frame):
