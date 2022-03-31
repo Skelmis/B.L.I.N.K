@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import sys
 
+
 from wxasync import WxAsyncApp
 
 from blink import HomeFrame

@@ -21,4 +21,8 @@ class DropletFrame(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.ensure_close)
 
     def ensure_close(self, event: wx.Event):
+        self.teardown()
         self._home_page.Destroy()
+
+    def teardown(self):
+        pass
