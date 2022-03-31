@@ -43,7 +43,7 @@ class HomeFrame(wx.Frame):
         self.description_text: wx.StaticText = wx.StaticText(
             self,
             wx.ID_ANY,
-            "Boldly Jump Into Newfound Knowledge",
+            "Boldly Jump Into New-found Knowledge",
         )
         self.description_text.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.NORMAL))
 

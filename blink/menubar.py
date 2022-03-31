@@ -54,6 +54,9 @@ class MenuBar(wx.MenuBar):
         time_size = wx.Window.GetTextExtent(self._bind_frame, self.time_now)
         self.status_bar.SetStatusWidths([-1, time_size.width])
 
+    def change_status(self, text: str) -> None:
+        self.status_bar.SetStatusText(text)
+
     @property
     def time_now(self) -> str:
         time = humanize.precisedelta(
